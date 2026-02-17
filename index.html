@@ -14,10 +14,15 @@
             color: #1a1a1a;
             letter-spacing: 0.05em;
             overflow-x: hidden;
-            /* 最初はスクロール禁止 */
-            overflow-y: hidden;
-            /* スマホでのタップハイライトを無効化 */
             -webkit-tap-highlight-color: transparent;
+        }
+
+        /* JavaScript読み込み前の初期状態：強制スクロール禁止 */
+        body.locked {
+            overflow: hidden;
+            height: 100vh;
+            position: fixed; /* スマホでのスクロールを強力に阻止 */
+            width: 100%;
         }
         
         .sans { font-family: 'Zen Kaku Gothic New', sans-serif; }
@@ -28,33 +33,35 @@
             letter-spacing: 0.2em;
         }
 
-        /* --- ☁️ 進化した霧のレイヤー（スマホ対応版） ☁️ --- */
+        /* --- ☁️ 霧のレイヤー（修正版） ☁️ --- */
         #mist-layer {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            /* スマホのアドレスバー対策で dvh を使用 */
-            height: 100dvh; 
+            width: 100%;
+            height: 100dvh; /* dvhでスマホのアドレスバー問題を回避 */
             background: linear-gradient(135deg, #fcfbf9 0%, #f0f0f0 100%);
             z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease;
+            transition: transform 1.0s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease;
             transform-origin: right center;
-            /* カーソルをポインターにしてクリック可能であることを示す */
             cursor: pointer;
+            /* スマホでのタッチ判定を確実にする設定 */
+            touch-action: none; 
         }
 
         /* 霧の中にあるナビゲーション文字 */
         .mist-text {
             color: #c5a059;
-            font-size: 0.8rem;
-            letter-spacing: 0.3em;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
             animation: pulse 2s infinite;
             position: relative;
             text-align: center;
+            font-weight: 500;
+            pointer-events: none; /* 文字自体がクリックを邪魔しないようにする */
         }
         .mist-text::after {
             content: "";
@@ -68,9 +75,8 @@
 
         /* 風が吹いたときのアニメーションクラス */
         .wind-blow {
-            transform: translateX(110%) skewX(-15deg);
+            transform: translateX(120%) skewX(-20deg); /* 移動距離を増やして確実に画面外へ */
             opacity: 0;
-            pointer-events: none;
         }
 
         @keyframes pulse {
@@ -111,11 +117,9 @@
         }
     </style>
 </head>
-<body class="antialiased">
-
-    <div id="mist-layer">
+<body class="antialiased locked"> <div id="mist-layer">
         <div class="mist-text sans">
-            TAP / SCROLL<br>TO UNVEIL
+            TAP TO START
         </div>
     </div>
 
@@ -135,10 +139,4 @@
 
             <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center md:justify-start fade-up delay-500">
                 <div class="relative">
-                    <img src="profile.JPG" alt="Profile" class="profile-img w-64 h-80 md:w-80 md:h-[500px] object-cover shadow-xl">
-                    <div class="absolute -bottom-4 -right-4 w-full h-full border border-[#c5a059] -z-10"></div>
-                </div>
-            </div>
-
-            <div class="absolute bottom-8 right-8 text-right fade-up delay-100">
-                <p class="text-xs text-[#c5a
+                    <img src="profile.JPG" alt="Profile" class="profile-img w-64 h-80 md:w-80 md:h-[500px] object-cover shadow-
