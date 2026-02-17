@@ -57,4 +57,154 @@
             }
             100% {
                 opacity: 0;
-                visibility: hidden; /* ★ここで完全に無効化します
+                visibility: hidden; /* ★ここで完全に無効化します★ */
+                display: none;      /* ダメ押しで非表示 */
+            }
+        }
+
+        @keyframes text-fade {
+            0% { opacity: 0; transform: translateY(10px); }
+            40% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* --- 以下、通常のコンテンツスタイル --- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.0s ease, transform 1.0s ease;
+        }
+        
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 霧が晴れた後に出るように遅延 */
+        .delay-show { transition-delay: 2.5s; }
+
+        .profile-img { filter: grayscale(20%); transition: filter 0.5s ease; }
+        .profile-img:hover { filter: grayscale(0%); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="simple-mist">
+        <div class="mist-name sans">KAZUKI NAKAI</div>
+    </div>
+
+    <section class="min-h-screen flex flex-col md:flex-row items-center justify-center relative p-8 md:p-20">
+        
+        <div class="md:w-1/2 h-full flex flex-row-reverse justify-center md:justify-end items-start md:pr-20 z-10 fade-up delay-show">
+            <h1 class="tategaki text-4xl md:text-5xl font-medium leading-loose h-[400px] md:h-[500px]">
+                仲井 千貴
+                <span class="text-xs md:text-sm mt-4 text-gray-500 sans tracking-widest">KAZUKI NAKAI</span>
+            </h1>
+            <p class="tategaki text-sm md:text-base text-gray-600 leading-loose h-[300px] md:h-[400px] mt-12 mr-6 md:mr-12 border-l border-gray-200 pl-6">
+                次世代のマーケティングを、<br>
+                その手で切り拓く。
+            </p>
+        </div>
+
+        <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center md:justify-start fade-up delay-show">
+            <div class="relative">
+                <img src="profile.JPG" alt="Profile" class="profile-img w-64 h-80 md:w-80 md:h-[500px] object-cover shadow-xl">
+                <div class="absolute -bottom-4 -right-4 w-full h-full border border-[#c5a059] -z-10"></div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 right-8 text-right fade-up delay-show">
+            <p class="text-xs text-[#c5a059] tracking-[0.2em] mb-1">Nk.</p>
+            <p class="text-xs text-gray-400 sans">Portfolio</p>
+        </div>
+    </section>
+
+    <section class="py-24 md:py-32 bg-white">
+        <div class="container mx-auto px-8 max-w-3xl">
+            <span class="text-[#c5a059] text-xs tracking-[0.3em] block mb-4 sans fade-up">CURRENT STATUS</span>
+            <h2 class="text-2xl md:text-3xl font-medium mb-12 fade-up">現在地</h2>
+            
+            <div class="space-y-12 fade-up">
+                <div class="border-l-2 border-[#c5a059] pl-6 py-2">
+                    <p class="text-sm text-gray-500 mb-2 sans">2025.11 - Present</p>
+                    <h3 class="text-xl font-medium mb-4">WEB広告入稿オペレーター見習い</h3>
+                    <p class="text-gray-600 leading-loose text-sm md:text-base font-light">
+                        DDA社に入社し、デジタルマーケティングの基礎となる「広告入稿」の精度とスピードを追求しています。
+                        クライアントの大切な予算を預かる責任感を持ち、実務を通して基盤を固めています。
+                    </p>
+                </div>
+
+                <div class="bg-[#fcfbf9] p-8 fade-up">
+                    <h4 class="text-sm font-medium mb-6 text-gray-800 tracking-widest text-center">SKILL SET</h4>
+                    <ul class="space-y-4 text-center">
+                        <li class="text-gray-700 font-light border-b border-gray-200 pb-2 inline-block px-4">
+                            GY（Google・Yahoo!）の基礎的な入稿フローを習得
+                        </li>
+                        <br>
+                        <li class="text-gray-700 font-light border-b border-gray-200 pb-2 inline-block px-4">
+                            ミスのない正確なオペレーション遂行
+                        </li>
+                        <br>
+                        <li class="text-gray-700 font-light border-b border-gray-200 pb-2 inline-block px-4">
+                            業務効率化へのAI活用・研究
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 md:py-32 bg-[#1a1a1a] text-white">
+        <div class="container mx-auto px-8 max-w-4xl text-center">
+            <span class="text-[#c5a059] text-xs tracking-[0.3em] block mb-6 sans fade-up">VISION</span>
+            <h2 class="text-3xl md:text-4xl font-medium mb-16 fade-up leading-normal">
+                「作業者」で終わらない。<br>
+                経営を支える<br>
+                唯一無二のパートナーへ。
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-8 text-left fade-up">
+                <div class="p-6 border border-gray-800 hover:border-[#c5a059] transition-colors duration-500">
+                    <h3 class="text-lg mb-4 text-[#c5a059]">Marketing</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light sans">
+                        広告運用だけでなく、Webマーケティング全般を俯瞰し、クライアントの事業成長に直結する戦略を描く。
+                    </p>
+                </div>
+                <div class="p-6 border border-gray-800 hover:border-[#c5a059] transition-colors duration-500">
+                    <h3 class="text-lg mb-4 text-[#c5a059]">Sales</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light sans">
+                        「スーパー営業マン」として、数字を作るだけでなく、顧客の経営課題を共に解決する伴走者になる。
+                    </p>
+                </div>
+                <div class="p-6 border border-gray-800 hover:border-[#c5a059] transition-colors duration-500">
+                    <h3 class="text-lg mb-4 text-[#c5a059]">Technology</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light sans">
+                        AIをはじめとする最新技術を常にキャッチアップし、圧倒的な効率と品質を武器にする。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#111] text-gray-600 py-12 text-center text-xs tracking-widest sans border-t border-gray-900">
+        <p>&copy; 2026 Kazuki Nakai. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // スクロール検知のみ（これは霧とは関係なく、本文用です）
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // 最初に全部監視対象にする
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
