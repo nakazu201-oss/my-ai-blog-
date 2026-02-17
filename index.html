@@ -36,15 +36,16 @@
             animation: mist-vanish 1.5s ease-out 2.0s forwards;
         }
 
-        /* 名前のアニメーション */
+        /* 冒頭のメッセージ（失敗はKPI） */
         .mist-name {
-            font-size: 1.2rem;
-            color: #c5a059;
-            letter-spacing: 0.3em;
+            font-size: 1.1rem;      /* 文字サイズ */
+            color: #c5a059;         /* ゴールド */
+            letter-spacing: 0.2em;  /* 文字間隔 */
             animation: text-fade 2.0s ease-in-out forwards;
+            font-weight: 500;       /* 少し太くして意志の強さを表現 */
         }
 
-        /* 霧を消すためのキーフレーム（ここが命です） */
+        /* 霧を消すためのキーフレーム */
         @keyframes mist-vanish {
             0% {
                 opacity: 1;
@@ -53,12 +54,12 @@
             99% {
                 opacity: 0;
                 visibility: visible;
-                transform: scale(1.05); /* 少し拡大しながら消える */
+                transform: scale(1.05);
             }
             100% {
                 opacity: 0;
-                visibility: hidden; /* ★ここで完全に無効化します★ */
-                display: none;      /* ダメ押しで非表示 */
+                visibility: hidden;
+                display: none;
             }
         }
 
@@ -91,7 +92,7 @@
 <body class="antialiased">
 
     <div id="simple-mist">
-        <div class="mist-name sans">KAZUKI NAKAI</div>
+        <div class="mist-name sans">失敗はKPI</div>
     </div>
 
     <section class="min-h-screen flex flex-col md:flex-row items-center justify-center relative p-8 md:p-20">
@@ -192,7 +193,7 @@
     </footer>
 
     <script>
-        // スクロール検知のみ（これは霧とは関係なく、本文用です）
+        // スクロール検知
         document.addEventListener('DOMContentLoaded', function() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -202,7 +203,6 @@
                 });
             }, { threshold: 0.1 });
 
-            // 最初に全部監視対象にする
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         });
     </script>
