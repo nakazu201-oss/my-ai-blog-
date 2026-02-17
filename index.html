@@ -13,77 +13,48 @@
             background-color: #fcfbf9;
             color: #1a1a1a;
             letter-spacing: 0.05em;
-            overflow-x: hidden; /* 横スクロール防止 */
+            overflow-x: hidden;
         }
         
         .sans { font-family: 'Zen Kaku Gothic New', sans-serif; }
-        
-        .tategaki {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            letter-spacing: 0.2em;
-        }
+        .tategaki { writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 0.2em; }
 
-        /* --- ☁️ シンプルで確実な霧の演出 ☁️ --- */
-        #opening-mist {
+        /* --- 🛡️ 絶対に動作するシンプル・ミスト 🛡️ --- */
+        #simple-mist {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #fcfbf9; /* 背景色と同じ色 */
-            z-index: 9999;
+            background-color: #fcfbf9; /* 背景色と同じ白 */
+            z-index: 9999; /* 最前面 */
             display: flex;
             align-items: center;
             justify-content: center;
-            /* 2秒間待ってから、1.5秒かけて消える */
-            animation: mist-clear 1.5s cubic-bezier(0.7, 0, 0.3, 1) 2.0s forwards;
-            pointer-events: none; /* クリックを邪魔しない */
+            
+            /* アニメーション設定：2.0秒待機 -> 1.5秒かけて消える */
+            animation: mist-vanish 1.5s ease-out 2.0s forwards;
         }
 
-        /* 霧の中のロゴ（仲井さんの気配） */
-        .mist-logo {
+        /* 名前のアニメーション */
+        .mist-name {
             font-size: 1.2rem;
             color: #c5a059;
-            letter-spacing: 0.5em;
-            opacity: 0;
-            /* 霧の中でふわりと点滅する */
-            animation: logo-fade 2.0s ease-in-out forwards;
+            letter-spacing: 0.3em;
+            animation: text-fade 2.0s ease-in-out forwards;
         }
 
-        /* 霧が晴れる動き（右へスライドして消える） */
-        @keyframes mist-clear {
+        /* 霧を消すためのキーフレーム（ここが命です） */
+        @keyframes mist-vanish {
             0% {
                 opacity: 1;
-                transform: translateX(0);
                 visibility: visible;
+            }
+            99% {
+                opacity: 0;
+                visibility: visible;
+                transform: scale(1.05); /* 少し拡大しながら消える */
             }
             100% {
                 opacity: 0;
-                transform: translateX(20px); /* 少し右に流れながら消える */
-                visibility: hidden;
-            }
-        }
-
-        @keyframes logo-fade {
-            0% { opacity: 0; transform: scale(0.9); }
-            50% { opacity: 1; transform: scale(1); }
-            90% { opacity: 0; transform: scale(1.1); }
-            100% { opacity: 0; }
-        }
-
-        /* --- コンテンツのアニメーション --- */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.0s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ヒーローエリアの出現タイミング調整（霧が晴れた直後） */
-        .hero-delay {
-            transition-delay: 2.3s; /* 霧
+                visibility: hidden; /* ★ここで完全に無効化します
