@@ -13,16 +13,7 @@
             background-color: #fcfbf9;
             color: #1a1a1a;
             letter-spacing: 0.05em;
-            overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* JavaScript読み込み前の初期状態：強制スクロール禁止 */
-        body.locked {
-            overflow: hidden;
-            height: 100vh;
-            position: fixed; /* スマホでのスクロールを強力に阻止 */
-            width: 100%;
+            overflow-x: hidden; /* 横スクロール防止 */
         }
         
         .sans { font-family: 'Zen Kaku Gothic New', sans-serif; }
@@ -33,110 +24,66 @@
             letter-spacing: 0.2em;
         }
 
-        /* --- ☁️ 霧のレイヤー（修正版） ☁️ --- */
-        #mist-layer {
+        /* --- ☁️ シンプルで確実な霧の演出 ☁️ --- */
+        #opening-mist {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100dvh; /* dvhでスマホのアドレスバー問題を回避 */
-            background: linear-gradient(135deg, #fcfbf9 0%, #f0f0f0 100%);
+            height: 100%;
+            background-color: #fcfbf9; /* 背景色と同じ色 */
             z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 1.0s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease;
-            transform-origin: right center;
-            cursor: pointer;
-            /* スマホでのタッチ判定を確実にする設定 */
-            touch-action: none; 
+            /* 2秒間待ってから、1.5秒かけて消える */
+            animation: mist-clear 1.5s cubic-bezier(0.7, 0, 0.3, 1) 2.0s forwards;
+            pointer-events: none; /* クリックを邪魔しない */
         }
 
-        /* 霧の中にあるナビゲーション文字 */
-        .mist-text {
+        /* 霧の中のロゴ（仲井さんの気配） */
+        .mist-logo {
+            font-size: 1.2rem;
             color: #c5a059;
-            font-size: 0.9rem;
-            letter-spacing: 0.2em;
-            animation: pulse 2s infinite;
-            position: relative;
-            text-align: center;
-            font-weight: 500;
-            pointer-events: none; /* 文字自体がクリックを邪魔しないようにする */
-        }
-        .mist-text::after {
-            content: "";
-            display: block;
-            width: 1px;
-            height: 40px;
-            background: #c5a059;
-            margin: 20px auto 0;
-            animation: scroll-line 1.5s infinite;
-        }
-
-        /* 風が吹いたときのアニメーションクラス */
-        .wind-blow {
-            transform: translateX(120%) skewX(-20deg); /* 移動距離を増やして確実に画面外へ */
+            letter-spacing: 0.5em;
             opacity: 0;
+            /* 霧の中でふわりと点滅する */
+            animation: logo-fade 2.0s ease-in-out forwards;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
+        /* 霧が晴れる動き（右へスライドして消える） */
+        @keyframes mist-clear {
+            0% {
+                opacity: 1;
+                transform: translateX(0);
+                visibility: visible;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(20px); /* 少し右に流れながら消える */
+                visibility: hidden;
+            }
         }
-        @keyframes scroll-line {
-            0% { transform: scaleY(0); transform-origin: top; }
-            50% { transform: scaleY(1); transform-origin: top; }
-            51% { transform: scaleY(1); transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
+
+        @keyframes logo-fade {
+            0% { opacity: 0; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1); }
+            90% { opacity: 0; transform: scale(1.1); }
+            100% { opacity: 0; }
         }
 
         /* --- コンテンツのアニメーション --- */
         .fade-up {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
             transition: all 1.0s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
-        .active-content .fade-up.visible {
+        .visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* 遅延設定 */
-        .delay-100 { transition-delay: 0.2s; }
-        .delay-300 { transition-delay: 0.4s; }
-        .delay-500 { transition-delay: 0.6s; }
-
-        /* 画像のスタイル */
-        .profile-img {
-            filter: grayscale(20%);
-            transition: filter 0.5s ease;
-        }
-        .profile-img:hover {
-            filter: grayscale(0%);
-        }
-    </style>
-</head>
-<body class="antialiased locked"> <div id="mist-layer">
-        <div class="mist-text sans">
-            TAP TO START
-        </div>
-    </div>
-
-    <main id="main-content">
-        <section class="min-h-screen flex flex-col md:flex-row items-center justify-center relative p-8 md:p-20">
-            
-            <div class="md:w-1/2 h-full flex flex-row-reverse justify-center md:justify-end items-start md:pr-20 z-10 fade-up delay-300">
-                <h1 class="tategaki text-4xl md:text-5xl font-medium leading-loose h-[400px] md:h-[500px]">
-                    仲井 千貴
-                    <span class="text-xs md:text-sm mt-4 text-gray-500 sans tracking-widest">KAZUKI NAKAI</span>
-                </h1>
-                <p class="tategaki text-sm md:text-base text-gray-600 leading-loose h-[300px] md:h-[400px] mt-12 mr-6 md:mr-12 border-l border-gray-200 pl-6">
-                    次世代のマーケティングを、<br>
-                    その手で切り拓く。
-                </p>
-            </div>
-
-            <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center md:justify-start fade-up delay-500">
-                <div class="relative">
-                    <img src="profile.JPG" alt="Profile" class="profile-img w-64 h-80 md:w-80 md:h-[500px] object-cover shadow-
+        /* ヒーローエリアの出現タイミング調整（霧が晴れた直後） */
+        .hero-delay {
+            transition-delay: 2.3s; /* 霧
