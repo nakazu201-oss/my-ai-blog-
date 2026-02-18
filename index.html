@@ -3,217 +3,396 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KAZUKI NAKAI Portfolio - 次世代のマーケティングを、その手で切り拓く。">
     <title>KAZUKI NAKAI | Portfolio</title>
+    
+    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts: KNFの雰囲気に近いフォントを選定 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&family=Noto+Serif+JP:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet">
+
     <style>
-        /* 全体の設定 */
+        /* --- デザイン担当のこだわり設定 --- */
+        :root {
+            --color-gold: #c5a059; /* KNF風の上品な金 */
+            --color-black: #111111;
+            --color-text: #333333;
+            --color-bg: #fdfcf8; /* 和紙のようなごく淡いクリーム色 */
+        }
+
         body {
-            font-family: 'Shippori Mincho', serif;
-            background-color: #fcfbf9;
-            color: #1a1a1a;
-            letter-spacing: 0.05em;
-            overflow-x: hidden;
+            font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 2.0;
+            letter-spacing: 0.08em;
+            overflow-x: hidden; /* 横スクロール防止 */
+        }
+
+        .sans { font-family: 'Zen Kaku Gothic New', sans-serif; }
+        .en-font { font-family: 'Noto Serif JP', serif; }
+
+        /* 縦書きクラス（KNFの特徴） */
+        .tategaki {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        /* --- スクロールアニメーション（エンジニア担当） --- */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
         }
         
-        .sans { font-family: 'Zen Kaku Gothic New', sans-serif; }
-        .tategaki { writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 0.2em; }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        /* --- 🛡️ 絶対に動作するシンプル・ミスト 🛡️ --- */
-        #simple-mist {
+        /* 画像のホバーエフェクト & カラー化アニメーション */
+        .color-transition {
+            transition: filter 2.5s ease-in-out, transform 0.8s ease; /* じわっと色付く */
+        }
+        
+        .hover-zoom {
+            overflow: hidden;
+        }
+        .hover-zoom:hover img {
+            transform: scale(1.05);
+        }
+
+        /* --- オープニング演出 --- */
+        #opening-curtain {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #fcfbf9; /* 背景色と同じ白 */
-            z-index: 9999; /* 最前面 */
+            background-color: #ffffff;
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            
-            /* アニメーション設定：2.0秒待機 -> 1.5秒かけて消える */
-            animation: mist-vanish 1.5s ease-out 2.0s forwards;
-        }
-
-        /* 冒頭のメッセージ（失敗はKPI） */
-        .mist-name {
-            font-size: 1.1rem;      /* 文字サイズ */
-            color: #c5a059;         /* ゴールド */
-            letter-spacing: 0.2em;  /* 文字間隔 */
-            animation: text-fade 2.0s ease-in-out forwards;
-            font-weight: 500;       /* 少し太くして意志の強さを表現 */
-        }
-
-        /* 霧を消すためのキーフレーム */
-        @keyframes mist-vanish {
-            0% {
-                opacity: 1;
-                visibility: visible;
-            }
-            99% {
-                opacity: 0;
-                visibility: visible;
-                transform: scale(1.05);
-            }
-            100% {
-                opacity: 0;
-                visibility: hidden;
-                display: none;
-            }
-        }
-
-        @keyframes text-fade {
-            0% { opacity: 0; transform: translateY(10px); }
-            40% { opacity: 1; transform: translateY(0); }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        /* --- 以下、通常のコンテンツスタイル --- */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1.0s ease, transform 1.0s ease;
+            transition: opacity 1.5s ease-out, visibility 1.5s;
         }
         
-        .visible {
-            opacity: 1;
-            transform: translateY(0);
+        .opening-text {
+            color: var(--color-gold);
+            font-size: 1.2rem;
+            letter-spacing: 0.5em;
+            animation: text-pulse 2s infinite;
         }
 
-        /* 霧が晴れた後に出るように遅延 */
-        .delay-show { transition-delay: 2.5s; }
+        .hidden-curtain {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
 
-        .profile-img { filter: grayscale(20%); transition: filter 0.5s ease; }
-        .profile-img:hover { filter: grayscale(0%); }
+        @keyframes text-pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
+        /* KNF風の装飾 */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 1px;
+            background-color: var(--color-gold);
+        }
+
+        /* 墨文字演出 */
+        .ink-text {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* SP時の調整 */
+        @media (max-width: 768px) {
+            .tategaki-md {
+                writing-mode: horizontal-tb;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
 
-    <div id="simple-mist">
-        <div class="mist-name sans">は じ め ま し て</div>
+    <!-- オープニング -->
+    <div id="opening-curtain">
+        <div class="opening-text tategaki">仲 井 千 貴</div>
     </div>
 
-    <section class="min-h-screen flex flex-col md:flex-row items-center justify-center relative p-8 md:p-20">
-        
-        <div class="md:w-1/2 h-full flex flex-row-reverse justify-center md:justify-end items-start md:pr-20 z-10 fade-up delay-show">
-            <h1 class="tategaki text-4xl md:text-5xl font-medium leading-loose h-[400px] md:h-[500px]">
-                仲井 千貴
-                <span class="text-xs md:text-sm mt-4 text-gray-500 sans tracking-widest">KAZUKI NAKAI</span>
-            </h1>
-            <p class="tategaki text-sm md:text-base text-gray-600 leading-loose h-[300px] md:h-[400px] mt-12 mr-6 md:mr-12 border-l border-gray-200 pl-6">
-                次世代のマーケティングを、<br>
-                その手で切り拓く。
-            </p>
+    <!-- ヘッダー -->
+    <header class="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-start mix-blend-multiply pointer-events-none">
+        <!-- ロゴ（左上） -->
+        <div class="text-lg tracking-widest font-bold pointer-events-auto">
+            <span class="text-[#c5a059]">K</span>N
         </div>
-
-        <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center md:justify-start fade-up delay-show">
-            <div class="relative">
-                <img src="profile.JPG" alt="Profile" class="profile-img w-64 h-80 md:w-80 md:h-[500px] object-cover shadow-xl">
-                <div class="absolute -bottom-4 -right-4 w-full h-full border border-[#c5a059] -z-10"></div>
-            </div>
+        <!-- 日付（右上・装飾） -->
+        <div class="hidden md:block tategaki text-xs text-gray-400 tracking-widest h-24 border-l border-gray-300 pl-2">
+            2026.02 - Future
         </div>
+    </header>
 
-        <div class="absolute bottom-8 right-8 text-right fade-up delay-show">
-            <p class="text-xs text-[#c5a059] tracking-[0.2em] mb-1">Sendai</p>
-            <p class="text-xs text-gray-400 sans">JP</p>
-        </div>
-    </section>
-
-    <section class="py-24 md:py-32 bg-white">
-        <div class="container mx-auto px-8 max-w-3xl">
-            <span class="text-[#c5a059] text-xs tracking-[0.3em] block mb-4 sans fade-up">CURRENT STATUS</span>
-            <h2 class="text-2xl md:text-3xl font-medium mb-12 fade-up">現在地</h2>
+    <main>
+        <!-- キービジュアル (KV) -->
+        <section class="relative min-h-screen w-full flex flex-col md:flex-row items-center justify-center overflow-hidden pt-20 pb-20">
             
-            <div class="space-y-12 fade-up">
-                
-                <div class="border-l-2 border-[#c5a059] pl-6 py-2">
-                    <p class="text-sm text-gray-500 mb-2 sans">2026.02 - Present</p>
-                    <h3 class="text-xl font-medium mb-4">入稿オペレーター見習い</h3>
-                    <p class="text-gray-600 leading-loose text-sm md:text-base font-light">
-                        デジタルマーケティングの基礎となる「広告入稿」の精度とスピードを追求できるよう日々の研鑽を誓う。<br>
-                        また、クライアントの大切な予算を預かる責任感を持ち、実務を通して基盤を固めている。
-                    </p>
-                </div>
+            <!-- 背景の装飾円 -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60vh] h-[60vh] border border-[#c5a059] rounded-full opacity-20 pointer-events-none z-0"></div>
 
-                <div class="border-l-2 border-gray-200 pl-6 py-2">
-                    <p class="text-sm text-gray-400 mb-2 sans">2025.11 - 2026.02</p>
-                    <h3 class="text-xl font-medium mb-4 text-gray-700">初期研修・実践研修修了</h3>
-                    <p class="text-gray-500 leading-loose text-sm md:text-base font-light">
-                        介護ソフトメーカー勤務を経て、業界未経験でWEB広告代理店に入社。何度も挫けながら研修を修了。<br>
-                        すべては大きな”野望”を実現させる為。
-                    </p>
-                </div>
+            <!-- 名前（メイン） -->
+            <div class="z-10 md:absolute md:right-[15%] md:top-[20%] fade-in-section delay-300 mb-12 md:mb-0 text-center md:text-left">
+                <h1 class="tategaki text-5xl md:text-7xl font-medium tracking-wide leading-relaxed h-[400px] mx-auto md:mx-0">
+                    仲井 千貴
+                    <span class="block mt-6 text-sm text-[#c5a059] sans tracking-[0.3em]">KAZUKI NAKAI</span>
+                </h1>
+            </div>
 
-                <div class="bg-[#fcfbf9] p-8 fade-up">
-                    <h4 class="text-sm font-medium mb-6 text-gray-800 tracking-widest text-center">SKILL SET</h4>
-                    <ul class="space-y-4 text-center">
-                        <li class="text-gray-700 font-light border-b border-gray-200 pb-2 inline-block px-4">
-                            GY（Google・Yahoo!）の基礎的な入稿フローを習得
-                        </li>
-                        <br>
-                        <li class="text-gray-700 font-light border-b border-gray-200 pb-2 inline-block px-4">
-                            ミスのない正確なオペレーション遂行
-                        </li>
-                        <br>
-                        <li class="text-gray-700 font-light border-b border-gray-200 pb-2 inline-block px-4">
-                            業務効率化へのAI活用・研究
-                        </li>
-                    </ul>
+            <!-- キャッチコピー -->
+            <div class="z-10 mt-4 md:mt-0 md:absolute md:left-[15%] md:bottom-[20%] fade-in-section delay-500 mb-10 md:mb-0 px-4 md:px-0">
+                <p class="tategaki-md text-base md:text-xl leading-loose tracking-widest text-gray-700 text-center md:text-left">
+                    次世代の<br class="md:hidden">マーケティングを、<br>その手で切り拓く。
+                </p>
+            </div>
+
+            <!-- 写真エリア -->
+            <div class="z-0 w-72 h-96 md:w-[400px] md:h-[550px] relative fade-in-section hover-zoom shadow-2xl mx-auto">
+                <img id="profile-img" src="profile.JPG" alt="Kazuki Nakai" class="w-full h-full object-cover grayscale color-transition">
+                <!-- 枠線装飾 -->
+                <div class="absolute top-4 left-4 w-full h-full border border-[#c5a059] -z-10"></div>
+            </div>
+        </section>
+
+        <!-- KPI SECTION (画像のデザインを再現) -->
+        <section class="py-24 bg-white relative overflow-hidden">
+            <!-- 和紙っぽい背景テクスチャ演出 -->
+            <div class="absolute inset-0 opacity-30" style="background-image: repeating-linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 75%, #f0f0f0 75%, #f0f0f0), repeating-linear-gradient(45deg, #f0f0f0 25%, #fdfcf8 25%, #fdfcf8 75%, #f0f0f0 75%, #f0f0f0); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
+            
+            <div class="container mx-auto px-6 max-w-4xl relative z-10 fade-in-section">
+                <div class="flex flex-col items-center text-center">
+                    <!-- サブタイトル -->
+                    <span class="text-[#c5a059] text-xs tracking-[0.5em] mb-8 sans uppercase">My Philosophy</span>
+                    
+                    <!-- 書道風タイトル -->
+                    <h2 class="text-4xl md:text-5xl font-bold mb-16 ink-text text-gray-800" style="font-feature-settings: 'palt';">
+                        失敗という名のKPI
+                    </h2>
+
+                    <!-- PC用：画像のレイアウトを再現（上下線＋縦書き） -->
+                    <!-- 上下のボーダーラインを追加し、行間を広げて上品に -->
+                    <div class="hidden md:block w-full border-t border-b border-gray-200 py-16">
+                        <div class="tategaki h-[420px] text-lg leading-loose tracking-widest text-gray-800 font-medium mx-auto text-justify" style="line-height: 2.8;">
+                            遥か高みにある「野望」というKGI。<br><br>
+                            そこに到達するための道標こそが、<br>
+                            日々のKPIだ。<br><br>
+                            成功だけを数えても、人は育たない。<br>
+                            挑戦し、躓き、また立ち上がる。<br><br>
+                            その「失敗」の数だけ、私は強くなる。<br>
+                            泥臭く積み上げた数字の向こう側に、<br>
+                            まだ見ぬ景色が待っている。
+                        </div>
+                    </div>
+
+                    <!-- SP用：読みやすさ重視の横書き（内容は同じ） -->
+                    <div class="md:hidden w-full border-t border-b border-gray-200 py-10 px-4">
+                        <div class="text-left text-base leading-loose tracking-widest text-gray-800 font-medium space-y-6">
+                            <p>
+                                遥か高みにある「野望」というKGI。<br>
+                                そこに到達するための道標こそが、<br>日々のKPIだ。
+                            </p>
+                            <p>
+                                成功だけを数えても、人は育たない。<br>
+                                挑戦し、躓き、また立ち上がる。<br>
+                                その「失敗」の数だけ、私は強くなる。
+                            </p>
+                            <p>
+                                泥臭く積み上げた数字の向こう側に、<br>
+                                まだ見ぬ景色が待っている。
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="py-24 md:py-32 bg-[#1a1a1a] text-white">
-        <div class="container mx-auto px-8 max-w-4xl text-center">
-           <span class="text-[#c5a059] text-xl md:text-2xl tracking-[0.5em] block mb-8 font-medium fade-up">野望</span>
-            <h2 class="text-3xl md:text-4xl font-medium mb-16 fade-up leading-normal">
-                「作業者」で終わらない。<br>
-                経営を支える<br>
-                唯一無二のパートナーへ。
-            </h2>
+        <!-- CAREER SECTION -->
+        <section class="py-24 md:py-32 px-6 max-w-5xl mx-auto">
+            <div class="text-center fade-in-section">
+                <h2 class="section-title">Career History</h2>
+            </div>
+            
+            <div class="mt-12 space-y-8">
+                <!-- 最新の経歴 -->
+                <article class="flex flex-col md:flex-row border-b border-gray-200 pb-8 hover:bg-gray-50 transition-colors duration-300 p-4 fade-in-section">
+                    <div class="md:w-1/4 mb-2 md:mb-0">
+                        <time class="sans text-[#c5a059] font-medium text-lg">2026.02 - Present</time>
+                    </div>
+                    <div class="md:w-3/4">
+                        <h3 class="text-xl font-medium mb-3 mt-1 md:mt-0">入稿オペレーター見習い</h3>
+                        <p class="text-sm text-gray-600 leading-loose">
+                            デジタルマーケティングの最前線にて、広告入稿の精度とスピードを追求。
+                            クライアントの大切な予算を預かる責任感を胸に、AI活用による業務効率化も研究中。
+                        </p>
+                    </div>
+                </article>
 
-            <div class="grid md:grid-cols-3 gap-8 text-left fade-up">
-                <div class="p-6 border border-gray-800 hover:border-[#c5a059] transition-colors duration-500">
-                    <h3 class="text-lg mb-4 text-[#c5a059]">Marketing</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light sans">
-                        広告運用だけでなく、Webマーケティング全般を俯瞰し、クライアントの事業成長に直結する戦略を描く。
+                <!-- 過去の経歴 -->
+                <article class="flex flex-col md:flex-row border-b border-gray-200 pb-8 hover:bg-gray-50 transition-colors duration-300 p-4 fade-in-section">
+                    <div class="md:w-1/4 mb-2 md:mb-0">
+                        <time class="sans text-gray-400 text-lg">2025.11 - 2026.02</time>
+                    </div>
+                    <div class="md:w-3/4">
+                        <h3 class="text-xl font-medium mb-3 mt-1 md:mt-0 text-gray-700">初期研修・実践研修 修了</h3>
+                        <p class="text-sm text-gray-600 leading-loose">
+                            介護ソフトメーカー勤務を経て、業界未経験でWEB広告代理店に入社。
+                            基礎を徹底的に叩き込み、次なる飛躍への土台を構築。
+                        </p>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="text-right mt-8 fade-in-section">
+                <a href="#" class="inline-flex items-center text-xs tracking-widest hover:text-[#c5a059] transition-colors">
+                    VIEW MORE <span class="ml-2">→</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- AMBITION / CONTENTS SECTION -->
+        <section class="py-24 bg-[#111111] text-white relative overflow-hidden">
+            <!-- 背景装飾 -->
+            <div class="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none" style="background-image: radial-gradient(#c5a059 1px, transparent 1px); background-size: 30px 30px;"></div>
+
+            <div class="max-w-6xl mx-auto px-6 relative z-10">
+                <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-20 fade-in-section">
+                    <div class="mb-8 md:mb-0">
+                        <span class="text-[#c5a059] text-xs tracking-[0.3em] block mb-2 sans">VISION</span>
+                        <h2 class="text-4xl md:text-5xl font-medium">野望</h2>
+                    </div>
+                    <p class="md:max-w-md text-gray-400 text-sm leading-loose text-justify">
+                        「作業者」では終わらない。<br>
+                        経営を支える唯一無二のパートナーへ。
                     </p>
                 </div>
-                <div class="p-6 border border-gray-800 hover:border-[#c5a059] transition-colors duration-500">
-                    <h3 class="text-lg mb-4 text-[#c5a059]">Sales</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light sans">
-                        「スーパー営業マン」として、数字を作るだけでなく、顧客の経営課題を共に解決する伴走者になる。
-                    </p>
-                </div>
-                <div class="p-6 border border-gray-800 hover:border-[#c5a059] transition-colors duration-500">
-                    <h3 class="text-lg mb-4 text-[#c5a059]">Technology</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light sans">
-                        AIをはじめとする最新技術を常にキャッチアップし、圧倒的な効率と品質を武器にする。
-                    </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Item 1 -->
+                    <div class="group border border-gray-800 hover:border-[#c5a059] p-8 transition-all duration-500 fade-in-section">
+                        <div class="h-48 overflow-hidden mb-6 bg-gray-900 relative">
+                             <div class="absolute inset-0 flex items-center justify-center text-gray-700 group-hover:text-[#c5a059] transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                             </div>
+                        </div>
+                        <h3 class="text-xl mb-2 group-hover:text-[#c5a059] transition-colors">Marketing</h3>
+                        <p class="text-gray-500 text-xs leading-relaxed">
+                            広告運用だけでなく、Webマーケティング全般を俯瞰し、クライアントの事業成長に直結する戦略を描く。
+                        </p>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="group border border-gray-800 hover:border-[#c5a059] p-8 transition-all duration-500 fade-in-section delay-100">
+                         <div class="h-48 overflow-hidden mb-6 bg-gray-900 relative">
+                             <div class="absolute inset-0 flex items-center justify-center text-gray-700 group-hover:text-[#c5a059] transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                             </div>
+                        </div>
+                        <h3 class="text-xl mb-2 group-hover:text-[#c5a059] transition-colors">Sales</h3>
+                        <p class="text-gray-500 text-xs leading-relaxed">
+                            「スーパー営業マン」として、数字を作るだけでなく、顧客の経営課題を共に解決する伴走者になる。
+                        </p>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="group border border-gray-800 hover:border-[#c5a059] p-8 transition-all duration-500 fade-in-section delay-200">
+                         <div class="h-48 overflow-hidden mb-6 bg-gray-900 relative">
+                             <div class="absolute inset-0 flex items-center justify-center text-gray-700 group-hover:text-[#c5a059] transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                </svg>
+                             </div>
+                        </div>
+                        <h3 class="text-xl mb-2 group-hover:text-[#c5a059] transition-colors">Technology</h3>
+                        <p class="text-gray-500 text-xs leading-relaxed">
+                            AIをはじめとする最新技術を常にキャッチアップし、圧倒的な効率と品質を武器にする。
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer class="bg-[#111] text-gray-600 py-12 text-center text-xs tracking-widest sans border-t border-gray-900">
-        <p>&copy; 2026 Kazuki Nakai. All Rights Reserved.</p>
-    </footer>
+        <!-- FOOTER (SIMPLE) -->
+        <footer class="bg-white py-12 px-6 text-center border-t border-gray-100">
+            <div class="fade-in-section flex flex-col items-center">
+                <img src="profile.JPG" alt="Icon" class="w-10 h-10 rounded-full grayscale opacity-50 mb-4 object-cover">
+                <p class="text-[10px] text-gray-400 tracking-widest sans">
+                    &copy; 2026 KAZUKI NAKAI. All Rights Reserved.
+                </p>
+            </div>
+        </footer>
 
+    </main>
+
+    <!-- スクリプト（エンジニア担当：軽量かつ高機能に） -->
     <script>
-        // スクロール検知
-        document.addEventListener('DOMContentLoaded', function() {
-            const observer = new IntersectionObserver((entries) => {
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. オープニング演出
+            const curtain = document.getElementById('opening-curtain');
+            
+            // プロフィール画像の要素を取得
+            const profileImg = document.getElementById('profile-img');
+
+            setTimeout(() => {
+                curtain.classList.add('hidden-curtain');
+            }, 2000); // 2秒後にフェードアウト
+
+            // ★ 画像のカラー化（ページロードから2.5秒後 = カーテンが消えた直後あたり）
+            setTimeout(() => {
+                if(profileImg) {
+                    // grayscaleクラスを削除してカラーにする
+                    profileImg.classList.remove('grayscale');
+                }
+            }, 2500);
+
+            // 2. スクロール監視（Intersection Observer）
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // 15%見えたら発火
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // 一度表示したら監視終了
                     }
                 });
-            }, { threshold: 0.1 });
+            }, observerOptions);
 
-            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            fadeElements.forEach(el => observer.observe(el));
         });
     </script>
 </body>
