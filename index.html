@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: KNFの雰囲気に近いフォントを選定 -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&family=Noto+Serif+JP:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet">
@@ -17,10 +17,10 @@
     <style>
         /* --- デザイン担当のこだわり設定 --- */
         :root {
-            --color-gold: #c5a059; /* KNF風の上品な金 */
+            --color-gold: #c5a059;
             --color-black: #111111;
             --color-text: #333333;
-            --color-bg: #fdfcf8; /* 和紙のようなごく淡いクリーム色 */
+            --color-bg: #fdfcf8;
         }
 
         body {
@@ -29,19 +29,19 @@
             color: var(--color-text);
             line-height: 2.0;
             letter-spacing: 0.08em;
-            overflow-x: hidden; /* 横スクロール防止 */
+            overflow-x: hidden;
         }
 
         .sans { font-family: 'Zen Kaku Gothic New', sans-serif; }
         .en-font { font-family: 'Noto Serif JP', serif; }
 
-        /* 縦書きクラス（KNFの特徴） */
+        /* 縦書きクラス */
         .tategaki {
             writing-mode: vertical-rl;
             text-orientation: mixed;
         }
 
-        /* --- スクロールアニメーション（エンジニア担当） --- */
+        /* --- スクロールアニメーション --- */
         .fade-in-section {
             opacity: 0;
             transform: translateY(30px);
@@ -54,9 +54,8 @@
             transform: translateY(0);
         }
 
-        /* 画像のホバーエフェクト & カラー化アニメーション */
         .color-transition {
-            transition: filter 2.5s ease-in-out, transform 0.8s ease; /* じわっと色付く */
+            transition: filter 2.5s ease-in-out, transform 0.8s ease;
         }
         
         .hover-zoom {
@@ -100,15 +99,14 @@
             100% { opacity: 0.4; }
         }
 
-        /* KNF風の装飾 */
+        /* 見出し装飾 */
         .section-title {
             position: relative;
             display: inline-block;
             margin-bottom: 3rem;
             font-size: 2rem;
         }
-        
-        .section-title::after {
+        .section-title::after, .section-title-gold::after {
             content: '';
             position: absolute;
             bottom: -15px;
@@ -118,13 +116,10 @@
             height: 1px;
             background-color: var(--color-gold);
         }
-
-        /* 墨文字演出 */
-        .ink-text {
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        .section-title-gold::after {
+            width: 60px;
         }
 
-        /* SP時の調整 */
         @media (max-width: 768px) {
             .tategaki-md {
                 writing-mode: horizontal-tb;
@@ -141,23 +136,17 @@
 
     <!-- ヘッダー -->
     <header class="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-start mix-blend-multiply pointer-events-none">
-        <!-- ロゴ（左上） -->
         <div class="text-lg tracking-widest font-bold pointer-events-auto">
             <span class="text-[#c5a059]">K</span>N
         </div>
-        <!-- 日付（右上・装飾） -->
-        <div class="hidden md:block tategaki text-xs text-gray-400 tracking-widest h-24 border-l border-gray-300 pl-2">
-        </div>
+        <div class="hidden md:block tategaki text-xs text-gray-400 tracking-widest h-24 border-l border-gray-300 pl-2"></div>
     </header>
 
     <main>
         <!-- キービジュアル (KV) -->
         <section class="relative min-h-screen w-full flex flex-col md:flex-row items-center justify-center overflow-hidden pt-20 pb-20">
-            
-            <!-- 背景の装飾円 -->
             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60vh] h-[60vh] border border-[#c5a059] rounded-full opacity-20 pointer-events-none z-0"></div>
 
-            <!-- 名前（メイン） -->
             <div class="z-10 md:absolute md:right-[15%] md:top-[20%] fade-in-section delay-300 mb-12 md:mb-0 text-center md:text-left">
                 <h1 class="tategaki text-5xl md:text-7xl font-medium tracking-wide leading-relaxed h-[400px] mx-auto md:mx-0">
                     仲井 千貴
@@ -165,39 +154,30 @@
                 </h1>
             </div>
 
-            <!-- キャッチコピー -->
             <div class="z-10 mt-4 md:mt-0 md:absolute md:left-[15%] md:bottom-[20%] fade-in-section delay-500 mb-10 md:mb-0 px-4 md:px-0">
                 <p class="tategaki-md text-base md:text-xl leading-loose tracking-widest text-gray-700 text-center md:text-left">
                     次世代の<br class="md:hidden">マーケティングを、<br>その手で切り拓く。
                 </p>
             </div>
 
-            <!-- 写真エリア -->
             <div class="z-0 w-72 h-96 md:w-[400px] md:h-[550px] relative fade-in-section hover-zoom shadow-2xl mx-auto">
-                <img id="profile-img" src="profile.JPG" alt="Kazuki Nakai" class="w-full h-full object-cover grayscale color-transition">
-                <!-- 枠線装飾 -->
+                <img id="profile-img" src="profile2.JPG" alt="Kazuki Nakai" class="w-full h-full object-cover grayscale color-transition">
                 <div class="absolute top-4 left-4 w-full h-full border border-[#c5a059] -z-10"></div>
             </div>
         </section>
 
-        <!-- KPI SECTION (画像のデザインを再現) -->
+        <!-- KPI SECTION -->
         <section class="py-24 bg-white relative overflow-hidden">
-            <!-- 和紙っぽい背景テクスチャ演出 -->
             <div class="absolute inset-0 opacity-30" style="background-image: repeating-linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 75%, #f0f0f0 75%, #f0f0f0), repeating-linear-gradient(45deg, #f0f0f0 25%, #fdfcf8 25%, #fdfcf8 75%, #f0f0f0 75%, #f0f0f0); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
             
             <div class="container mx-auto px-6 max-w-4xl relative z-10 fade-in-section">
                 <div class="flex flex-col items-center text-center">
-                    <!-- サブタイトル -->
                     <span class="text-[#c5a059] text-xs tracking-[0.5em] mb-8 sans uppercase">Philosophy</span>
                     
-                    <!-- 書道風タイトル画像 -->
-                    <!-- mix-blend-multiplyで背景の和紙テクスチャと馴染ませる -->
                     <div class="mb-12 md:mb-16 flex justify-center w-full px-4">
-                        <img src="transparent_image.png" alt="失敗という名のKPI" class="w-full max-w-[280px] md:max-w-md mix-blend-multiply drop-shadow-sm">
+                        <img src="transparent_image.png" alt="失敗という名のKPI" loading="lazy" class="w-full max-w-[280px] md:max-w-md mix-blend-multiply drop-shadow-sm">
                     </div>
 
-                    <!-- PC用：画像のレイアウトを再現（上下線＋縦書き） -->
-                    <!-- 上下のボーダーラインを追加し、行間を広げて上品に -->
                     <div class="hidden md:block w-full border-t border-b border-gray-200 py-16">
                         <div class="tategaki h-[420px] text-lg leading-loose tracking-widest text-gray-800 font-medium mx-auto text-justify" style="line-height: 2.8;">
                             遥か高みにある「野望」というゴール。<br><br>
@@ -211,20 +191,23 @@
                         </div>
                     </div>
 
-                    <!-- SP用：読みやすさ重視の横書き（内容は同じ） -->
                     <div class="md:hidden w-full border-t border-b border-gray-200 py-10 px-4">
-                        <div class="text-left text-base leading-loose tracking-widest text-gray-800 font-medium space-y-6">
+                        <div class="text-center text-[15px] leading-loose tracking-wider text-gray-800 font-medium space-y-8 break-keep">
                             <p>
-                                遥か高みにある「野望」というゴール。<br>
-                                そこに到達するための道標こそが、<br>日々のKPIだ。
+                                遥か高みにある<br>
+                                「野望」というゴール。<br>
+                                そこに到達するための道標こそが、<br>
+                                日々のKPIだ。
                             </p>
                             <p>
                                 成功だけを数えても、人は育たない。<br>
                                 挑戦し、躓き、また立ち上がる。<br>
-                                その「失敗」の数だけ、私は強くなる。
+                                その「失敗」の数だけ、<br>
+                                私は強くなる。
                             </p>
                             <p>
-                                泥臭く積み上げた数字の向こう側に、<br>
+                                泥臭く積み上げた<br>
+                                数字の向こう側に、<br>
                                 まだ見ぬ景色が待っている。
                             </p>
                         </div>
@@ -240,7 +223,6 @@
             </div>
             
             <div class="mt-12 space-y-8">
-                <!-- 最新の経歴 -->
                 <article class="flex flex-col md:flex-row border-b border-gray-200 pb-8 hover:bg-gray-50 transition-colors duration-300 p-4 fade-in-section">
                     <div class="md:w-1/4 mb-2 md:mb-0">
                         <time class="sans text-[#c5a059] font-medium text-lg">2026.02 - Present</time>
@@ -254,7 +236,6 @@
                     </div>
                 </article>
 
-                <!-- 過去の経歴 -->
                 <article class="flex flex-col md:flex-row border-b border-gray-200 pb-8 hover:bg-gray-50 transition-colors duration-300 p-4 fade-in-section">
                     <div class="md:w-1/4 mb-2 md:mb-0">
                         <time class="sans text-gray-400 text-lg">2025.11 - 2026.02</time>
@@ -268,84 +249,150 @@
                     </div>
                 </article>
             </div>
-            
-            <div class="text-right mt-8 fade-in-section">
-                <a href="#" class="inline-flex items-center text-xs tracking-widest hover:text-[#c5a059] transition-colors">
-                    VIEW MORE <span class="ml-2">→</span>
-                </a>
-            </div>
         </section>
 
-        <!-- AMBITION / CONTENTS SECTION -->
-        <section class="py-24 bg-[#111111] text-white relative overflow-hidden">
-            <!-- 背景装飾 -->
-            <div class="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none" style="background-image: radial-gradient(#c5a059 1px, transparent 1px); background-size: 30px 30px;"></div>
+        <!-- ★ 新生・AMBITION SECTION ★ -->
+        <section class="py-32 bg-[#0a0a0a] text-white relative overflow-hidden" id="ambition">
+            <div class="hidden md:block absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-[#c5a059] rounded-full mix-blend-screen filter blur-[150px] opacity-20 pointer-events-none"></div>
+            <div class="hidden md:block absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#c5a059] rounded-full mix-blend-screen filter blur-[150px] opacity-10 pointer-events-none"></div>
 
-            <div class="max-w-6xl mx-auto px-6 relative z-10">
-                <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-20 fade-in-section">
-                    <div class="mb-8 md:mb-0">
-                        <span class="text-[#c5a059] text-xs tracking-[0.3em] block mb-2 sans">VISION</span>
-                        <h2 class="text-4xl md:text-5xl font-medium">野望</h2>
-                    </div>
-                    <p class="md:max-w-md text-gray-400 text-sm leading-loose text-justify">
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="text-center mb-24 fade-in-section">
+                    <span class="text-[#c5a059] text-sm tracking-[0.4em] block mb-4 sans uppercase">Ambition</span>
+                    <h2 class="text-4xl md:text-5xl font-medium tracking-widest section-title-gold relative inline-block">
+                        野望
+                    </h2>
+                    <p class="mt-12 text-gray-300 text-sm md:text-base leading-loose max-w-2xl mx-auto">
                         「作業者」では終わらない。<br>
                         経営を支える唯一無二のパートナーへ。
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Item 1 -->
-                    <div class="group border border-gray-800 hover:border-[#c5a059] p-8 transition-all duration-500 fade-in-section">
-                        <div class="h-48 overflow-hidden mb-6 bg-gray-900 relative">
-                             <div class="absolute inset-0 flex items-center justify-center text-gray-700 group-hover:text-[#c5a059] transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                </svg>
-                             </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                    
+                    <!-- 1. マーケティング＆セールス -->
+                    <div class="group relative p-[1px] bg-gradient-to-b from-gray-800 to-transparent hover:from-[#c5a059] hover:shadow-[0_0_40px_rgba(197,160,89,0.2)] transition-all duration-700 fade-in-section">
+                        <div class="bg-[#111111] h-full p-8 md:p-10 flex flex-col justify-start relative overflow-hidden">
+                            <div class="relative z-10">
+                                <span class="text-[#c5a059] text-5xl font-light mb-6 block opacity-40 group-hover:opacity-100 transition-opacity en-font">01</span>
+                                <!-- タイトルサイズを小さくし、キーワードを金色の発光で強調 -->
+                                <h3 class="text-lg md:text-xl font-medium mb-3 tracking-widest text-white leading-tight">
+                                    <span class="text-[#c5a059] drop-shadow-[0_0_12px_rgba(197,160,89,0.9)] font-bold">スーパー営業マン</span><br class="hidden md:block">になる
+                                </h3>
+                                <span class="text-[10px] text-[#c5a059] opacity-70 en-font uppercase tracking-[0.2em] block mb-4">Super Sales</span>
+                                <p class="text-gray-400 text-sm leading-loose text-justify">
+                                    WEB広告運用に留まらず、ウェブマーケティング全体を俯瞰。顧客の経営課題を共に解決し、事業成長を牽引するパートナーとなる。
+                                </p>
+                            </div>
                         </div>
-                        <h3 class="text-xl mb-2 group-hover:text-[#c5a059] transition-colors">Marketing</h3>
-                        <p class="text-gray-500 text-xs leading-relaxed">
-                            広告運用だけでなく、Webマーケティング全般を俯瞰し、クライアントの事業成長に直結する戦略を描く。
-                        </p>
                     </div>
 
-                    <!-- Item 2 -->
-                    <div class="group border border-gray-800 hover:border-[#c5a059] p-8 transition-all duration-500 fade-in-section delay-100">
-                         <div class="h-48 overflow-hidden mb-6 bg-gray-900 relative">
-                             <div class="absolute inset-0 flex items-center justify-center text-gray-700 group-hover:text-[#c5a059] transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                             </div>
+                    <!-- 2. クリエイター視点 -->
+                    <div class="group relative p-[1px] bg-gradient-to-b from-gray-800 to-transparent hover:from-[#c5a059] hover:shadow-[0_0_40px_rgba(197,160,89,0.2)] transition-all duration-700 fade-in-section delay-100">
+                        <div class="bg-[#111111] h-full p-8 md:p-10 flex flex-col justify-start relative overflow-hidden">
+                            <div class="relative z-10">
+                                <span class="text-[#c5a059] text-5xl font-light mb-6 block opacity-40 group-hover:opacity-100 transition-opacity en-font">02</span>
+                                <!-- タイトルサイズを小さくし、キーワードを金色の発光で強調 -->
+                                <h3 class="text-lg md:text-xl font-medium mb-3 tracking-widest text-white leading-tight">
+                                    <span class="text-[#c5a059] drop-shadow-[0_0_12px_rgba(197,160,89,0.9)] font-bold">クリエイター</span>の<br class="hidden md:block">目を持つ
+                                </h3>
+                                <span class="text-[10px] text-[#c5a059] opacity-70 en-font uppercase tracking-[0.2em] block mb-4">Creator's Perspective</span>
+                                <p class="text-gray-400 text-sm leading-loose text-justify">
+                                    LP作成、写真撮影、動画制作など、自らの手を動かしクリエイターとなる。現場視点を持つからこそ描ける、解像度の高いディレクションを提供する。
+                                </p>
+                            </div>
                         </div>
-                        <h3 class="text-xl mb-2 group-hover:text-[#c5a059] transition-colors">Sales</h3>
-                        <p class="text-gray-500 text-xs leading-relaxed">
-                            「スーパー営業マン」として、数字を作るだけでなく、顧客の経営課題を共に解決する伴走者になる。
-                        </p>
                     </div>
 
-                    <!-- Item 3 -->
-                    <div class="group border border-gray-800 hover:border-[#c5a059] p-8 transition-all duration-500 fade-in-section delay-200">
-                         <div class="h-48 overflow-hidden mb-6 bg-gray-900 relative">
-                             <div class="absolute inset-0 flex items-center justify-center text-gray-700 group-hover:text-[#c5a059] transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                                </svg>
-                             </div>
+                    <!-- 3. AIによるスケール -->
+                    <div class="group relative p-[1px] bg-gradient-to-b from-gray-800 to-transparent hover:from-[#c5a059] hover:shadow-[0_0_40px_rgba(197,160,89,0.2)] transition-all duration-700 fade-in-section delay-200">
+                        <div class="bg-[#111111] h-full p-8 md:p-10 flex flex-col justify-start relative overflow-hidden">
+                            <div class="relative z-10">
+                                <span class="text-[#c5a059] text-5xl font-light mb-6 block opacity-40 group-hover:opacity-100 transition-opacity en-font">03</span>
+                                <!-- タイトルサイズを小さくし、キーワードを金色の発光で強調 -->
+                                <h3 class="text-lg md:text-xl font-medium mb-3 tracking-widest text-white leading-tight">
+                                    <span class="text-[#c5a059] drop-shadow-[0_0_12px_rgba(197,160,89,0.9)] font-bold">AI</span>で能力を<br class="hidden md:block">最大化させる
+                                </h3>
+                                <span class="text-[10px] text-[#c5a059] opacity-70 en-font uppercase tracking-[0.2em] block mb-4">Maximize by AI</span>
+                                <p class="text-gray-400 text-sm leading-loose text-justify">
+                                    個人のスキルと経験を、AIの力で劇的にスケールさせる。最新技術を駆使し、圧倒的な品質と速度を伴う次世代のビジネスモデルを提案する。
+                                </p>
+                            </div>
                         </div>
-                        <h3 class="text-xl mb-2 group-hover:text-[#c5a059] transition-colors">Technology</h3>
-                        <p class="text-gray-500 text-xs leading-relaxed">
-                            AIをはじめとする最新技術を常にキャッチアップし、圧倒的な効率と品質を武器にする。
-                        </p>
                     </div>
+
                 </div>
             </div>
         </section>
 
-        <!-- FOOTER (SIMPLE) -->
-        <footer class="bg-white py-12 px-6 text-center border-t border-gray-100">
+        <!-- ★ クリエイティブポートフォリオへの特大CTA ★ -->
+        <section id="creative-portfolio" class="relative py-48 overflow-hidden cursor-pointer group fade-in-section bg-scroll md:bg-fixed" style="background-image: url('P52502152.jpg'); background-position: center; background-size: cover;" onclick="window.open('https://nakazu201-oss.github.io/photo-portfolio/', '_blank', 'noopener,noreferrer')">
+            
+            <!-- 上下の細いゴールドライン装飾 -->
+            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c5a059] to-transparent opacity-50"></div>
+            <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c5a059] to-transparent opacity-50"></div>
+
+            <!-- ダークオーバーレイ（ホバーで少し明るく） -->
+            <div class="absolute inset-0 bg-[#0a0a0a]/90 group-hover:bg-[#0a0a0a]/70 transition-colors duration-700"></div>
+
+            <div class="relative z-10 max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
+                <span class="text-[#c5a059] text-xs tracking-[0.5em] mb-6 sans uppercase block transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">Explore My Works</span>
+                
+                <!-- テキストに光彩効果（ドロップシャドウ）を追加 -->
+                <h2 class="text-5xl md:text-7xl font-medium tracking-widest text-white mb-8 en-font drop-shadow-[0_0_15px_rgba(197,160,89,0.3)] group-hover:drop-shadow-[0_0_25px_rgba(197,160,89,0.6)] transition-all duration-500">
+                    Creative Portfolio
+                </h2>
+                
+                <p class="text-gray-300 text-sm md:text-base leading-loose max-w-2xl mx-auto mb-16 opacity-80 group-hover:opacity-100 transition-opacity">
+                    写真、映像、デザイン。<br class="md:hidden">
+                    視覚から心を動かし、ビジネスを加速させるクリエイティブの軌跡。
+                </p>
+
+                <!-- ★ 進化した「思わず押したくなる」ボタン ★ -->
+                <div class="relative inline-block group/btn">
+                    <!-- 常に背後で鼓動する光（パルスエフェクトで視線を誘導） -->
+                    <div class="absolute inset-0 bg-[#c5a059] blur-xl opacity-30 animate-pulse rounded-sm group-hover/btn:opacity-60 transition-opacity duration-500"></div>
+                    
+                    <!-- ボタン本体 -->
+                    <div class="relative flex items-center bg-[#c5a059] text-[#111111] transition-all duration-300 transform group-hover/btn:-translate-y-1 group-hover/btn:shadow-[0_15px_30px_-10px_rgba(197,160,89,0.6)] active:translate-y-0 active:scale-95 overflow-hidden">
+                        
+                        <!-- ホバー時の光沢スライドエフェクト -->
+                        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent transform -translate-x-full group-hover/btn:animate-[shimmer_1s_ease-in-out]"></div>
+
+                        <!-- 左側：テキストエリア -->
+                        <div class="px-8 md:px-12 py-5 font-medium tracking-[0.2em] text-sm uppercase relative z-10">
+                            View All Works
+                        </div>
+                        
+                        <!-- 右側：アクセント＆矢印エリア（色が少し濃い） -->
+                        <div class="bg-[#a88645] px-6 py-5 flex items-center justify-center relative z-10 transition-colors duration-300 group-hover/btn:bg-[#111111] group-hover/btn:text-[#c5a059]">
+                            <span class="transform transition-transform duration-500 group-hover/btn:translate-x-2 text-lg">→</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <style>
+                @keyframes shimmer {
+                    100% { transform: translateX(100%); }
+                }
+            </style>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-white py-12 px-6 text-center border-t border-gray-100 relative">
             <div class="fade-in-section flex flex-col items-center">
-                <img src="profile.JPG" alt="Icon" class="w-10 h-10 rounded-full grayscale opacity-50 mb-4 object-cover">
+                
+                <!-- ★ トップに戻るボタン ★ -->
+                <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="mb-16 group flex flex-col items-center justify-center focus:outline-none">
+                    <span class="text-gray-400 group-hover:text-[#111111] transition-colors duration-300 text-xl mb-2 transform group-hover:-translate-y-1">↑</span>
+                    <span class="text-[10px] tracking-[0.3em] text-gray-400 group-hover:text-[#111111] transition-colors duration-300 en-font uppercase relative">
+                        Back to Top
+                        <span class="absolute -bottom-2 left-1/2 w-0 h-[1px] bg-[#111111] transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                    </span>
+                </button>
+
+                <img src="profile2.JPG" alt="Icon" loading="lazy" class="w-10 h-10 rounded-full grayscale opacity-50 mb-4 object-cover">
                 <p class="text-[10px] text-gray-400 tracking-widest sans">
                     &copy; 2026 KAZUKI NAKAI. All Rights Reserved.
                 </p>
@@ -354,45 +401,107 @@
 
     </main>
 
-    <!-- スクリプト（エンジニア担当：軽量かつ高機能に） -->
+    <!-- ★ 画面下部追従ボタン（フローティングナビゲーション） ★ -->
+    <div id="floating-banner" class="fixed bottom-0 left-0 w-full bg-[#111111]/85 backdrop-blur-md border-t border-[#c5a059]/30 z-[100] py-3 px-6 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] transition-all duration-500 transform translate-y-0 opacity-100">
+        <div class="max-w-4xl mx-auto flex justify-center items-center">
+            <!-- aタグではなくbuttonタグを使うことで、スマホブラウザ特有の「URLハッシュによるジャンプバグ」を完全回避 -->
+            <button id="floating-link" class="flex items-center space-x-3 group py-2 focus:outline-none">
+                <span class="text-xs md:text-sm text-gray-300 tracking-[0.2em] group-hover:text-[#c5a059] transition-colors font-medium">クリエイティブポートフォリオはこちら</span>
+                <span class="text-[#c5a059] text-lg font-bold animate-bounce mt-1">↓</span>
+            </button>
+        </div>
+    </div>
+
     <script>
+        // 【修正】ブラウザのジャンプ履歴を完全に無効化
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        // 【追加】URLに余計な「#creative-portfolio」などが付いていたら消去してジャンプを封じる
+        if (window.location.hash) {
+            window.history.replaceState(null, null, window.location.pathname + window.location.search);
+        }
+
+        // 【追加】少し遅延させて強制的に一番上に戻す（WebView特有の遅延ジャンプ対策）
+        setTimeout(() => { window.scrollTo(0, 0); }, 50);
+        setTimeout(() => { window.scrollTo(0, 0); }, 200);
+
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. オープニング演出
+            // オープニング演出
             const curtain = document.getElementById('opening-curtain');
-            
-            // プロフィール画像の要素を取得
             const profileImg = document.getElementById('profile-img');
 
             setTimeout(() => {
-                curtain.classList.add('hidden-curtain');
-            }, 2000); // 2秒後にフェードアウト
+                if(curtain) curtain.classList.add('hidden-curtain');
+            }, 2000);
 
-            // ★ 画像のカラー化（ページロードから2.5秒後 = カーテンが消えた直後あたり）
             setTimeout(() => {
                 if(profileImg) {
-                    // grayscaleクラスを削除してカラーにする
                     profileImg.classList.remove('grayscale');
                 }
             }, 2500);
 
-            // 2. スクロール監視（Intersection Observer）
+            // スクロール監視（ふわっと表示）
             const observerOptions = {
                 root: null,
-                rootMargin: '0px',
-                threshold: 0.15 // 15%見えたら発火
+                rootMargin: '100px 0px',
+                threshold: 0.1
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); // 一度表示したら監視終了
+                        observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
             const fadeElements = document.querySelectorAll('.fade-in-section');
             fadeElements.forEach(el => observer.observe(el));
+
+            // 安全装置（フォールバック）
+            setTimeout(() => {
+                fadeElements.forEach(el => {
+                    el.classList.add('is-visible');
+                });
+            }, 3500);
+
+            // ★ 追従バナーのスクロール制御（JSのみで移動） ★
+            const floatingLink = document.getElementById('floating-link');
+            if (floatingLink) {
+                floatingLink.addEventListener('click', () => {
+                    const target = document.getElementById('creative-portfolio');
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
+
+            // ★ 追従バナーの表示/非表示制御 ★
+            const floatingBanner = document.getElementById('floating-banner');
+            const creativePortfolioSection = document.getElementById('creative-portfolio');
+
+            if (floatingBanner && creativePortfolioSection) {
+                const bannerObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Creative Portfolioセクションが見えたらバナーを下に隠す
+                            floatingBanner.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+                        } else {
+                            // 見えなくなったらバナーを再表示
+                            floatingBanner.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+                        }
+                    });
+                }, {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.05 // 5%でも見えたら発火
+                });
+
+                bannerObserver.observe(creativePortfolioSection);
+            }
         });
     </script>
 </body>
